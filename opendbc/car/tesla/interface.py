@@ -99,7 +99,9 @@ class CarInterface(CarInterfaceBase):
     if candidate == CAR.TESLA_MODEL_X:
       stock_cp.dashcamOnly = False
 
-    if 0x3DF in fingerprint[1]:
+    # sunnypilot's vehicle-bus (0x3DF) feature is for the Model 3/Y harness; legacy S/X
+    # (HW1-3) use different buses and DBCs, so never enable it there
+    if candidate not in LEGACY_CARS and 0x3DF in fingerprint[1]:
       ret.flags |= TeslaFlagsSP.HAS_VEHICLE_BUS.value
       ret.safetyParam |= TeslaSafetyFlagsSP.HAS_VEHICLE_BUS
 

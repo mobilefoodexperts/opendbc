@@ -44,8 +44,9 @@ class CarStateExt:
 
     cp_ap_party = can_parsers[Bus.ap_party]
 
-    speed_units = self.can_define.dv["DI_state"]["DI_speedUnits"].get(int(cp_party.vl["DI_state"]["DI_speedUnits"]), None)
+    # legacy S/X DBCs may lack DI_state / DAS_status: skip the speed limit there instead of crashing
     try:
+      speed_units = self.can_define.dv["DI_state"]["DI_speedUnits"].get(int(cp_party.vl["DI_state"]["DI_speedUnits"]), None)
       speed_limit = cp_ap_party.vl["DAS_status"]["DAS_fusedSpeedLimit"]
       if self.can_define.dv["DAS_status"]["DAS_fusedSpeedLimit"].get(int(speed_limit), None) in ["NONE", "UNKNOWN_SNA"]:
         ret_sp.speedLimit = 0
