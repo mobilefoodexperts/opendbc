@@ -98,7 +98,10 @@ BSM_FLAGS = {
 
 def has_bsm(CP: structs.CarParams, CP_SP: structs.CarParamsSP | None) -> bool:
   if CP.brand == "tesla":
-    return True
+    # legacy Model S/X (HW1-3) report no blind-spot data (carstate.update_legacy never sets
+    # left/rightBlindspot), so treating them as BSM-equipped would read every lane as clear
+    from opendbc.car.tesla.values import LEGACY_CARS
+    return CP.carFingerprint not in LEGACY_CARS
   if CP.brand == "rivian":
     return CP_SP is not None and bool(CP_SP.flags & RivianFlagsSP.LONGITUDINAL_HARNESS_UPGRADE)
   return CP.brand in BSM_FLAGS and bool(CP.flags & BSM_FLAGS[CP.brand])
