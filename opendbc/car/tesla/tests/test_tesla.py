@@ -6,7 +6,7 @@ from opendbc.car.structs import CarParams
 from opendbc.car.tesla.interface import CarInterface
 from opendbc.car.tesla.fingerprints import FW_VERSIONS
 from opendbc.car.tesla.radar_interface import RADAR_START_ADDR
-from opendbc.car.tesla.values import CAR, FSD_14_FW, LEGACY_CARS
+from opendbc.car.tesla.values import CAR, LEGACY_CARS
 
 Ecu = CarParams.Ecu
 
