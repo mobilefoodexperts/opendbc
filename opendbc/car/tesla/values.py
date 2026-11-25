@@ -125,7 +125,8 @@ class CAR(Platforms):
 
 
 FW_QUERY_CONFIG = FwQueryConfig(
-  fw_version_regex=br".+,[EYX]\d?[A-Z]*\d{3}\.\d+(?:\.\d+)?",
+  # Model 3/Y and S/X "...,<letters><nnn>.<n>" versions, plus legacy S/X EPS part numbers (HW1) and 3-byte versions (HW1/HW2)
+  fw_version_regex=br"(?:.+,[EYXS]\d?[A-Z]*\d{3}\.\d+(?:\.\d+)?|\d{7}-\d{2}-[A-Z0-9]{3}\x00*|\x10[\x00-\xff]{2})",
   requests=[
     Request(
       [StdQueries.TESTER_PRESENT_REQUEST, StdQueries.SUPPLIER_SOFTWARE_VERSION_REQUEST],

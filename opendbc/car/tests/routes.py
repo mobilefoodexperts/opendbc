@@ -38,6 +38,13 @@ non_tested_cars = [
 
   # These are on the 2-bit DAS_steeringControlType firmware, which is dashcam only, need new routes
   TESLA.TESLA_MODEL_X,
+  # legacy Model S/X port (HW1-HW3), no public test routes yet
+  TESLA.TESLA_MODEL_S,
+  TESLA.TESLA_MODEL_S_HW1,
+  TESLA.TESLA_MODEL_S_HW2,
+  TESLA.TESLA_MODEL_S_HW3,
+  TESLA.TESLA_MODEL_X_HW1,
+  TESLA.TESLA_MODEL_X_HW2,
 
   # port extensions
   HYUNDAI.HYUNDAI_KONA_EV_NON_SCC,

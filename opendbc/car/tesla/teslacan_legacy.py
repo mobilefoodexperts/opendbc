@@ -28,7 +28,7 @@ class TeslaCANRaven:
     values["DAS_steeringControlChecksum"] = self.checksum(0x488, data[:3])
     return self.packers[CANBUS.party].make_can_msg("DAS_steeringControl", CANBUS.party, values)
 
-  def create_longitudinal_command(self, acc_state, accel, counter, v_ego, active, gas_pressed):
+  def create_longitudinal_command(self, acc_state, accel, counter, v_ego, active, gas_pressed=False):
     set_speed = max(v_ego * CV.MS_TO_KPH, 0)
     if active:
       set_speed = 0 if accel < 0 else V_CRUISE_MAX
