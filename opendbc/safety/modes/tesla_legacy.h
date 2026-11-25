@@ -21,7 +21,8 @@ static void tesla_legacy_rx_hook(const CANPacket_t *msg) {
   // Steering angle: (0.1 * val) - 819.2 in deg.
   if (!tesla_external_panda && (msg->bus == 0U) && (msg->addr == 0x370U)) {
     // Store it 1/10 deg to match steering request
-    const int angle_meas_new = (int)(((msg->data[4] & 0x3FU) << 8) | msg->data[5]) - 8192;
+    const unsigned int angle_meas_raw = ((msg->data[4] & 0x3FU) << 8) | msg->data[5];
+    const int angle_meas_new = (int)angle_meas_raw - 8192;
     update_sample(&angle_meas, angle_meas_new);
 
     const int hands_on_level = msg->data[4] >> 6;  // handsOnLevel

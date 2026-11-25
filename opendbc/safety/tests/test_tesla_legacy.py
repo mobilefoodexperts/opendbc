@@ -171,6 +171,10 @@ class TestTeslaLegacyHW1Safety(common.CarSafetyTest, common.AngleSteeringSafetyT
     # lateral acceleration and jerk are tested below
     pass
 
+  def test_rx_hook_speed_mismatch(self):
+    # legacy S/X safety has a single vehicle speed source (ESP_B), nothing to cross-check
+    pass
+
   def _round_speed(self, speed):
     # match ESP_vehicleSpeed rounding on CAN (0.01 kph)
     return round_speed(away_round(speed / 0.01 * 3.6) * 0.01 / 3.6)
@@ -281,10 +285,11 @@ class TestTeslaLegacyHW2Safety(common.SafetyTestBase):
                                            {"driverBrakeStatus": BRAKE_APPLIED if brake else BRAKE_NOT_APPLIED})
 
   def test_fwd_hook(self):
-    self.assertEqual(0, self.safety.safety_fwd_hook(2, MSG_APS_eacMonitor))
-    self.assertEqual(0, self.safety.safety_fwd_hook(2, MSG_DAS_steeringControl))
-    self.assertEqual(-1, self.safety.safety_fwd_hook(2, MSG_DAS_control_HW1))
-    self.assertEqual(-1, self.safety.safety_fwd_hook(2, MSG_DAS_control_PT))
+    # -1 = blocked, otherwise the bus it is forwarded to
+    self.assertEqual(-1, self.safety.safety_fwd_hook(2, MSG_APS_eacMonitor))
+    self.assertEqual(-1, self.safety.safety_fwd_hook(2, MSG_DAS_steeringControl))
+    self.assertEqual(0, self.safety.safety_fwd_hook(2, MSG_DAS_control_HW1))
+    self.assertEqual(0, self.safety.safety_fwd_hook(2, MSG_DAS_control_PT))
     self.assertEqual(2, self.safety.safety_fwd_hook(0, MSG_APS_eacMonitor))
 
   def test_chassis_messages(self):
