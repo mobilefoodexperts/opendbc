@@ -209,7 +209,7 @@ class CarState(CarStateBase, CarStateExt):
 
     # Doors
     DOORS = ["DOOR_STATE_FL", "DOOR_STATE_FR", "DOOR_STATE_RL", "DOOR_STATE_RR", "DOOR_STATE_FrontTrunk", "BOOT_STATE"]
-    ret.doorOpen = any((self.can_defines["GTW_carState"][door].get(int(cp_chassis.vl["GTW_carState"][door]), "OPEN") == "OPEN") for door in DOORS)
+    ret.doorOpen = any((self.can_defines["GTW_carState"][door].get(int(cp_chassis.vl["GTW_carState"][door]), "open") == "open") for door in DOORS)
 
     # Blinkers
     if self.CP.carFingerprint == CAR.TESLA_MODEL_X_HW1:
